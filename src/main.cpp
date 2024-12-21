@@ -33,12 +33,13 @@ private:
 
 int main(int argc, char **argv)
 {
-  SDL_Init(SDL_INIT_VIDEO);
+  SDL_Init(SDL_INIT_EVERYTHING);
   if (TTF_Init() < 0)
   {
     std::cout << "Error initializing SDL_ttf: " << SDL_GetError();
+    exit(1);
   }
-  
+
   SDL_Event Event;
   bool shouldQuit{false};
 
@@ -55,7 +56,7 @@ int main(int argc, char **argv)
       }
     }
     GameWindow.Render();
-    std::cout << "Hello, World!" << std::endl;
+    // std::cout << "Hello, World!" << std::endl;
     TextExample.Render(GameWindow.GetSurface());
     GameWindow.Update();
   }

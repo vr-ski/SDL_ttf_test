@@ -6,12 +6,13 @@
 class Text
 {
 public:
-  Text(std::string Content) : Font{TTF_OpenFont("Roboto-Medium.ttf", 50)}
+  Text(std::string Content) : Font{TTF_OpenFont("resources/HussarMilosc-lO6e.otf", 50)}
   {
     if (!Font)
     {
       std::cout << "Error loading font: " << SDL_GetError();
     }
+    CreateSurface(Content);
   }
 
   void Render(SDL_Surface *DestinationSurface)

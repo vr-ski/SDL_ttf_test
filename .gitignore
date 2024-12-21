@@ -32,3 +32,8 @@
 *.app
 demo
 app
+
+# Env
+.venv
+.vscode
+.idea
