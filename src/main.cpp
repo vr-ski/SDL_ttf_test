@@ -1,7 +1,7 @@
-#include "Text.h"
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <iostream>
+#include "Text.h"
 
 class Window
 {
@@ -33,7 +33,7 @@ private:
 
 int main(int argc, char **argv)
 {
-  SDL_Init(SDL_INIT_EVERYTHING);
+  SDL_Init(SDL_INIT_VIDEO);
   if (TTF_Init() < 0)
   {
     std::cout << "Error initializing SDL_ttf: " << SDL_GetError();
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
   bool shouldQuit{false};
 
   Window GameWindow;
-  Text TextExample{"Hello, World"};
+  Text TextExample{"Hello, World", 100};
 
   while (!shouldQuit)
   {
