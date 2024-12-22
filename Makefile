@@ -1,7 +1,13 @@
+SHELL=/bin/bash
+
 output := minesweeperxl
 
 minesweeperxl: $(wildcard src/*)
-	c++ src/main.cpp -lSDL2 -lSDL2_ttf -o $(output)
+	@printf "Building $(output)\n"
+	@c++ src/main.cpp -lSDL2 -lSDL2_ttf -o $(output)
+	@printf "Successfully built $(output)\n"
+
 
 clean:
-	rm -f "./$(output)"
+	@rm -f "./$(output)"
+	@printf "Successfully deleted $(output)\n"
