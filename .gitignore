@@ -32,8 +32,16 @@
 *.app
 demo
 app
+MineSweeperXL
+minesweeperxl
 
 # Env
 .venv
 .vscode
 .idea
+
+# Cmake
+build
+CMakeFiles
+CMakeTestfile.Cmake
+DartConfiguration.tcl
