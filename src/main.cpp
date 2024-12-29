@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Window.h"
 #include "Text.h"
-#include "Events.h"
+#include "UI.h"
 
 
 int main(int argc, char **argv)
@@ -16,43 +16,24 @@ int main(int argc, char **argv)
   CheckSDLError("TTF_Init");
   #endif
 
+  UI GameUI; 
+
   SDL_Event Event;
   bool shouldQuit{false};
 
-  Window GameWindow;
+  Window* GameWindow = Window::getInstance();
   Text TextExample{"Hello, World", 100};
 
   while (!shouldQuit)
   {
     while (SDL_PollEvent(&Event))
     {
-      switch (Event.type)
-      {
-      case SDL_MOUSEMOTION:
-        HandleMotion(Event.motion, GameWindow.get_Width(), GameWindow.get_Height());
-        break;
-      
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-        HandleButton(Event.button);
-        break;
-
-      case SDL_WINDOWEVENT: [[unlikely]]
-        HandleWindowEvent(Event.window);
-        break;
-      
-      case SDL_QUIT: [[unlikely]]
-        shouldQuit = true;
-        break;
-      
-      default:
-        break;
-      } 
+      shouldQuit = GameUI.HandleEvent(Event);
     }
 
-    GameWindow.Render();
-    TextExample.Render(GameWindow.GetSurface());
-    GameWindow.Update();
+    GameWindow->Render();
+    TextExample.Render(GameWindow->GetSurface());
+    GameWindow->Update();
   }
 
   TTF_Quit();

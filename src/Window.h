@@ -4,6 +4,13 @@
 class Window
 {
 public:
+  static Window* getInstance() {
+    if (instancePtr == nullptr) {
+      instancePtr = new Window();
+    }
+    return instancePtr;
+  }
+
   short get_Width(){
     return this->Width;
   }
@@ -12,11 +19,11 @@ public:
     return this->Height;
   }
 
-  Window()
-  {
-    SDLWindow = SDL_CreateWindow("My Pimped Program", SDL_WINDOWPOS_UNDEFINED,
-                                 SDL_WINDOWPOS_UNDEFINED, Width, Height, 0);
-  }
+  // Window()
+  // {
+  //   SDLWindow = SDL_CreateWindow("My Pimped Program", SDL_WINDOWPOS_UNDEFINED,
+  //                                SDL_WINDOWPOS_UNDEFINED, Width, Height, 0);
+  // }
 
   void Render()
   {
@@ -34,7 +41,16 @@ public:
   Window &operator=(const Window &) = delete;
 
 private:
+  static Window* instancePtr;
   short Width {1024};
   short Height {768};
   SDL_Window *SDLWindow;
+
+  Window()
+  {
+    SDLWindow = SDL_CreateWindow("My Pimped Program", SDL_WINDOWPOS_UNDEFINED,
+                                 SDL_WINDOWPOS_UNDEFINED, Width, Height, 0);
+  }
 };
+
+Window* Window::instancePtr = nullptr;
