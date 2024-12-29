@@ -4,10 +4,18 @@
 class Window
 {
 public:
+  short get_Width(){
+    return this->Width;
+  }
+
+  short get_Height(){
+    return this->Height;
+  }
+
   Window()
   {
     SDLWindow = SDL_CreateWindow("My Pimped Program", SDL_WINDOWPOS_UNDEFINED,
-                                 SDL_WINDOWPOS_UNDEFINED, 600, 300, 0);
+                                 SDL_WINDOWPOS_UNDEFINED, Width, Height, 0);
   }
 
   void Render()
@@ -26,5 +34,7 @@ public:
   Window &operator=(const Window &) = delete;
 
 private:
+  short Width {1024};
+  short Height {768};
   SDL_Window *SDLWindow;
 };

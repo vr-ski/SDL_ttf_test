@@ -1,16 +1,20 @@
 #include <iostream>
 #include "Window.h"
 #include "Text.h"
+#include "Events.h"
 
 
 int main(int argc, char **argv)
 {
   SDL_Init(SDL_INIT_VIDEO);
-  if (TTF_Init() < 0)
-  {
-    std::cout << "Error initializing SDL_ttf: " << SDL_GetError();
-    exit(1);
-  }
+  #ifdef ERROR_LOGGING
+  CheckSDLError("SDL_Init");
+  #endif
+
+  TTF_Init();
+  #ifdef ERROR_LOGGING
+  CheckSDLError("TTF_Init");
+  #endif
 
   SDL_Event Event;
   bool shouldQuit{false};
@@ -22,13 +26,31 @@ int main(int argc, char **argv)
   {
     while (SDL_PollEvent(&Event))
     {
-      if (Event.type == SDL_QUIT)
+      switch (Event.type)
       {
+      case SDL_MOUSEMOTION:
+        HandleMotion(Event.motion, GameWindow.get_Width(), GameWindow.get_Height());
+        break;
+      
+      case SDL_MOUSEBUTTONDOWN:
+      case SDL_MOUSEBUTTONUP:
+        HandleButton(Event.button);
+        break;
+
+      case SDL_WINDOWEVENT: [[unlikely]]
+        HandleWindowEvent(Event.window);
+        break;
+      
+      case SDL_QUIT: [[unlikely]]
         shouldQuit = true;
-      }
+        break;
+      
+      default:
+        break;
+      } 
     }
+
     GameWindow.Render();
-    // std::cout << "Hello, World!" << std::endl;
     TextExample.Render(GameWindow.GetSurface());
     GameWindow.Update();
   }
